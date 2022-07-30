@@ -11,9 +11,14 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1 className="text-2xl">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <div className="h-screen w-screen flex flex-col justify-center items-center">
+          <h1 className="text-3xl text-center">Which character is your favorite?</h1>
+          <div className="flex justify-center max-w-2xl mt-4 p-6 border">
+            <div className="w-20 h-20 bg-red-400">Char 1</div>
+            <div className="mx-4">VS</div>
+            <div className="w-20 h-20 bg-red-400">Char 2</div>
+          </div>
+        </div>
       </main>
 
       <footer></footer>
