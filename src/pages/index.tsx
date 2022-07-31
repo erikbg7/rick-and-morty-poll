@@ -1,17 +1,15 @@
+import React, { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { trpc } from '@/utils/trpc';
+import Image from 'next/image';
+import { getCharactersIds } from '@/utils/characters';
 
 const Home: NextPage = () => {
-  const { data, isLoading } = trpc.useQuery(['hello', { text: 'morty' }]);
+  const [characterIds, setCharacterIds] = useState<string[]>([]);
+  const [firstId, secondId] = characterIds;
 
-  if (isLoading) {
-    return <div>Loading....</div>;
-  }
-
-  if (data) {
-    return <div>{data.greeting}</div>;
-  }
+  useEffect(() => setCharacterIds(getCharactersIds), []);
 
   return (
     <div>
@@ -25,9 +23,9 @@ const Home: NextPage = () => {
         <div className="h-screen w-screen flex flex-col justify-center items-center">
           <h1 className="text-3xl text-center">Which character is your favorite?</h1>
           <div className="flex justify-center max-w-2xl mt-4 p-6 border">
-            <div className="w-20 h-20 bg-red-400">Char 1</div>
+            <div className="w-60 h-60">{firstId && <CharacterCardMemo id={firstId} />}</div>
             <div className="mx-4">VS</div>
-            <div className="w-20 h-20 bg-red-400">Char 2</div>
+            <div className="w-60 h-60">{secondId && <CharacterCardMemo id={secondId} />}</div>
           </div>
         </div>
       </main>
@@ -36,5 +34,30 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+const CharacterCard: React.FC<{ id: string }> = ({ id }) => {
+  const { data, isLoading } = trpc.useQuery(['get-character-by-id', { id }]);
+
+  if (isLoading) {
+    return <div></div>;
+  }
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative w-40 h-40 border-2 rounded-md overflow-hidden">
+        <Image
+          alt={data.character.name}
+          src={data.character.image}
+          layout="fill"
+          placeholder="blur"
+          blurDataURL="data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxNDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMzMzIiBvZmZzZXQ9IjIwJSIgLz4KICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzIyMiIgb2Zmc2V0PSI1MCUiIC8+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMzMzMiIG9mZnNldD0iNzAlIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxNDAiIGZpbGw9IiMzMzMiIC8+CiAgPHJlY3QgaWQ9InIiIHdpZHRoPSI0MDAiIGhlaWdodD0iMTQwIiBmaWxsPSJ1cmwoI2cpIiAvPgogIDxhbmltYXRlIHhsaW5rOmhyZWY9IiNyIiBhdHRyaWJ1dGVOYW1lPSJ4IiBmcm9tPSItNDAwIiB0bz0iNDAwIiBkdXI9IjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgIC8+Cjwvc3ZnPg=="
+        />
+      </div>
+      <h2>{data.character.name}</h2>
+    </div>
+  );
+};
+
+const CharacterCardMemo = React.memo(CharacterCard);
 
 export default Home;
