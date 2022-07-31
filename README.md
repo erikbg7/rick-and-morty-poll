@@ -32,3 +32,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Setup
+- Create Prisma schema (only done the first time) ```npx prisma init```
+- Add correct database url in .env file
+- Make a migration with any change done in the Prisma schema
+  `npx prisma migrate dev`
+
+- Starts studio to visually see the DB information
+  `npx prisma studio`
+
+-
