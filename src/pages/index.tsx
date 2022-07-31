@@ -11,6 +11,8 @@ const Home: NextPage = () => {
 
   useEffect(() => setCharacterIds(getCharactersIds), []);
 
+  const handleNewCharacters = () => setCharacterIds(getCharactersIds);
+
   return (
     <div>
       <Head>
@@ -24,9 +26,14 @@ const Home: NextPage = () => {
           <h1 className="text-3xl text-center">Which character is your favorite?</h1>
           <div className="flex justify-center max-w-2xl mt-4 p-6 border">
             <div className="w-60 h-60">{firstId && <CharacterCardMemo id={firstId} />}</div>
-            <div className="mx-4">VS</div>
+            <div className="mx-4">
+              <h4 className="font-rick text-5xl" style={{ color: '#3EE8E2' }}>
+                VS
+              </h4>
+            </div>
             <div className="w-60 h-60">{secondId && <CharacterCardMemo id={secondId} />}</div>
           </div>
+          <button onClick={handleNewCharacters}>new characters</button>
         </div>
       </main>
 
