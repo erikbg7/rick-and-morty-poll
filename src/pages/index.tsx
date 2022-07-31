@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { trpc } from '@/utils/trpc';
@@ -6,12 +6,14 @@ import Image from 'next/image';
 import { getCharactersIds } from '@/utils/characters';
 
 const Home: NextPage = () => {
-  const [characterIds, setCharacterIds] = useState<string[]>([]);
+  const [characterIds, setCharacterIds] = useState<string[]>(getCharactersIds);
   const [firstId, secondId] = characterIds;
 
-  useEffect(() => setCharacterIds(getCharactersIds), []);
-
-  const handleNewCharacters = () => setCharacterIds(getCharactersIds);
+  const handleCharacterVoting = useCallback((id: string) => {
+    // Perform mutation with character id
+    // set new characters
+    setCharacterIds(getCharactersIds);
+  }, []);
 
   return (
     <div>
@@ -25,7 +27,9 @@ const Home: NextPage = () => {
         <div className="h-screen w-screen flex flex-col justify-center items-center">
           <h1 className="text-5xl text-center mb-5">Which character is your favorite?</h1>
           <div className="flex justify-center max-w-2xl mt-4 p-6">
-            <div className="w-60 h-60">{firstId && <CharacterCardMemo id={firstId} />}</div>
+            <div className="w-60 h-60">
+              {firstId && <CharacterCardMemo id={firstId} onClick={handleCharacterVoting} />}
+            </div>
             <div className="mx-4 my-auto">
               <h4
                 className="font-rick text-5xl"
@@ -38,9 +42,10 @@ const Home: NextPage = () => {
                 VS
               </h4>
             </div>
-            <div className="w-60 h-60">{secondId && <CharacterCardMemo id={secondId} />}</div>
+            <div className="w-60 h-60">
+              {secondId && <CharacterCardMemo id={secondId} onClick={handleCharacterVoting} />}
+            </div>
           </div>
-          <button onClick={handleNewCharacters}>new characters</button>
         </div>
       </main>
 
@@ -49,7 +54,7 @@ const Home: NextPage = () => {
   );
 };
 
-const CharacterCard: React.FC<{ id: string }> = ({ id }) => {
+const CharacterCard: React.FC<{ id: string; onClick(id: string): void }> = ({ id, onClick }) => {
   const { data, isLoading } = trpc.useQuery(['get-character-by-id', { id }]);
 
   if (isLoading) {
@@ -58,7 +63,10 @@ const CharacterCard: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-40 h-40 border-2 rounded-md overflow-hidden">
+      <div
+        className="relative w-40 h-40 border-2 rounded-md overflow-hidden cursor-pointer"
+        onClick={() => onClick(id)}
+      >
         <Image
           alt={data.character.name}
           src={data.character.image}
