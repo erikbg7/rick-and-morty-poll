@@ -1,19 +1,22 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { trpc } from '@/utils/trpc';
 import Image from 'next/image';
+import { trpc } from '@/utils/trpc';
 import { getCharactersIds } from '@/utils/characters';
 
 const Home: NextPage = () => {
   const [characterIds, setCharacterIds] = useState<string[]>(getCharactersIds);
   const [firstId, secondId] = characterIds;
 
-  const handleCharacterVoting = useCallback((id: string) => {
-    // Perform mutation with character id
-    // set new characters
+  const voteMutation = trpc.useMutation('send-vote');
+
+  const handleCharacterVoting = (id: string) => {
+    id === firstId
+      ? voteMutation.mutate({ voteFor: firstId, voteAgainst: secondId })
+      : voteMutation.mutate({ voteFor: secondId, voteAgainst: firstId });
     setCharacterIds(getCharactersIds);
-  }, []);
+  };
 
   return (
     <div>
