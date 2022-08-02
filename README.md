@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=rick-and-morty-poll)
 
 ## Getting Started
 
@@ -42,4 +42,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Starts studio to visually see the DB information
   `npx prisma studio`
 
--

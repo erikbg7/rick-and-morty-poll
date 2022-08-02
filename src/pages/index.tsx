@@ -5,6 +5,12 @@ import Image from 'next/image';
 import { trpc } from '@/utils/trpc';
 import { getCharactersIds } from '@/utils/characters';
 
+const versusStyle = {
+  color: '#3EE8E2',
+  textShadow:
+    '2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff',
+};
+
 const Home: NextPage = () => {
   const [characterIds, setCharacterIds] = useState<string[]>(getCharactersIds);
   const [firstId, secondId] = characterIds;
@@ -31,22 +37,15 @@ const Home: NextPage = () => {
           <h1 className="text-5xl text-center mb-5">Which character is your favorite?</h1>
           <div className="flex justify-center max-w-2xl mt-4 p-6">
             <div className="w-60 h-60">
-              {firstId && <CharacterCardMemo id={firstId} onClick={handleCharacterVoting} />}
+              {firstId && <CharacterCard id={firstId} onClick={handleCharacterVoting} />}
             </div>
             <div className="mx-4 my-auto">
-              <h2
-                className="font-rick text-5xl"
-                style={{
-                  color: '#3EE8E2',
-                  textShadow:
-                    '2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff',
-                }}
-              >
+              <span className="font-rick text-5xl" style={versusStyle}>
                 VS
-              </h2>
+              </span>
             </div>
             <div className="w-60 h-60">
-              {secondId && <CharacterCardMemo id={secondId} onClick={handleCharacterVoting} />}
+              {secondId && <CharacterCard id={secondId} onClick={handleCharacterVoting} />}
             </div>
           </div>
         </div>
@@ -57,9 +56,11 @@ const Home: NextPage = () => {
   );
 };
 
-const CharacterCard: React.FC<{ id: string; onClick(id: string): void }> = ({ id, onClick }) => {
-  const { data, isLoading } = trpc.useQuery(['get-character-by-id', { id }]);
+type CharacterCardProps = { id: string; onClick(id: string): void };
 
+const CharacterCard: React.FC<CharacterCardProps> = ({ id, onClick }) => {
+  const { data, isLoading } = trpc.useQuery(['get-character-by-id', { id }]);
+  
   if (isLoading) {
     return <div></div>;
   }
@@ -78,11 +79,9 @@ const CharacterCard: React.FC<{ id: string; onClick(id: string): void }> = ({ id
           blurDataURL="data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxNDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMzMzIiBvZmZzZXQ9IjIwJSIgLz4KICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzIyMiIgb2Zmc2V0PSI1MCUiIC8+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMzMzMiIG9mZnNldD0iNzAlIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIxNDAiIGZpbGw9IiMzMzMiIC8+CiAgPHJlY3QgaWQ9InIiIHdpZHRoPSI0MDAiIGhlaWdodD0iMTQwIiBmaWxsPSJ1cmwoI2cpIiAvPgogIDxhbmltYXRlIHhsaW5rOmhyZWY9IiNyIiBhdHRyaWJ1dGVOYW1lPSJ4IiBmcm9tPSItNDAwIiB0bz0iNDAwIiBkdXI9IjFzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgIC8+Cjwvc3ZnPg=="
         />
       </div>
-      <h3 className="text-xl text-center mt-3">{data.character.name}</h3>
+      <h2 className="text-xl text-center mt-3">{data.character.name}</h2>
     </div>
   );
 };
-
-const CharacterCardMemo = React.memo(CharacterCard);
 
 export default Home;
