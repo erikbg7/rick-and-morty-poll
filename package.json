@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.1.1",
+    "@tanstack/react-virtual": "^3.0.0-beta.14",
     "@trpc/client": "^9.26.2",
     "@trpc/next": "^9.26.2",
     "@trpc/react": "^9.26.2",
