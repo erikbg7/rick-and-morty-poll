@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { trpc } from '@/utils/trpc';
 import { getCharactersIds } from '@/utils/characters';
 
-const versusStyle = {
-  color: '#3EE8E2',
+const fontStyle = {
+  color: '#3ee2e8',
   textShadow:
-    '2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff',
+    '1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000,1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000, ' +
+    '3px 0 5px #66b366, -3px 0 5px #66b366, 0 3px 5px #66b366, 0 -3px 5px #66b366, 2px 2px 5px #66b366, -2px -2px 5px #66b366, 2px -2px 5px #66b366, -2px 2px 5px #66b366',
 };
 
 const Home: NextPage = () => {
@@ -34,13 +35,16 @@ const Home: NextPage = () => {
 
       <main>
         <div className="h-screen w-screen flex flex-col justify-center items-center">
+          <div className="font-rick text-7xl pb-20" style={fontStyle}>
+            Rick <span className="font-rick text-4xl">And</span> Morty
+          </div>
           <h1 className="text-5xl text-center mb-5">Which character is your favorite?</h1>
           <div className="flex justify-center max-w-2xl mt-4 p-6">
             <div className="w-60 h-60">
               {firstId && <CharacterCard id={firstId} onClick={handleCharacterVoting} />}
             </div>
             <div className="mx-4 my-auto">
-              <span className="font-rick text-5xl" style={versusStyle}>
+              <span className="font-rick text-5xl" style={fontStyle}>
                 VS
               </span>
             </div>
