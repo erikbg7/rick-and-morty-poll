@@ -11,7 +11,7 @@ const fontStyle = {
   color: '#3ee2e8',
   textShadow:
     '1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000,1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000, ' +
-    '3px 0 5px #66b366, -3px 0 5px #66b366, 0 3px 5px #66b366, 0 -3px 5px #66b366, 2px 2px 5px #66b366, -2px -2px 5px #66b366, 2px -2px 5px #66b366, -2px 2px 5px #66b366',
+    '3px 0 4px #66b366, -3px 0 4px #66b366, 0 3px 4px #66b366, 0 -3px 4px #66b366, 2px 2px 4px #66b366, -2px -2px 4px #66b366, 2px -2px 4px #66b366, -2px 2px 4px #66b366',
 };
 
 const Home: NextPage = () => {
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
         <div className="flex justify-between items-center mx-auto md:w-[85%] lg:w-[70%]">
           <div className="flex items-center">
             <div className="relative my-1 mx-4 w-8 h-8 ">
-              <Image alt={'logo'} src={'/pickle-rick.png'} layout="fill" />
+              <Image alt="logo" sizes="50vw" src="/pickle-rick.png" layout="fill" />
             </div>
             <Link href="/results">
               <a className="text-2xl hover:text-gray-400">Results</a>
@@ -66,15 +66,15 @@ const Home: NextPage = () => {
       </nav>
 
       <main>
-        <div className="h-screen w-screen flex flex-col justify-end sm:justify-center items-center">
+        <div className="h-screen w-screen flex flex-col justify-center items-center">
           <div className="font-rick text-4xl sm:text-7xl" style={fontStyle}>
-            Rick <span className="font-rick text-xl sm:text-4xl">And</span> Morty
+            Rick <span className="font-rick text-2xl sm:text-4xl">And</span> Morty
           </div>
           <h1 className="text-2xl sm:text-5xl text-center p-5">
-            Which character is your favorite?
+            Which is your favorite character?
           </h1>
           <div className="flex flex-col sm:flex-row justify-center max-w-2xl p-6">
-            <div className="w-60 h-60">
+            <div className="w-60 h-40 sm:h-60">
               {firstId && <CharacterCard id={firstId} onClick={handleCharacterVoting} />}
             </div>
             <div className="hidden sm:visible mx-4 my-auto">
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
                 VS
               </span>
             </div>
-            <div className="w-60 h-60">
+            <div className="w-60 h-40 sm:h-60">
               {secondId && <CharacterCard id={secondId} onClick={handleCharacterVoting} />}
             </div>
           </div>
@@ -103,10 +103,11 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ id, onClick }) => {
   return (
     <div className="flex flex-col items-center">
       <div
-        className="relative w-40 h-40 border-2 rounded-md overflow-hidden cursor-pointer"
+        className="relative w-28 h-28 sm:w-40 sm:h-40 border-2 rounded-md overflow-hidden cursor-pointer"
         onClick={() => onClick(id)}
       >
         <Image
+          priority
           alt={data!.character!.name}
           src={data!.character!.imageUrl}
           layout="fill"

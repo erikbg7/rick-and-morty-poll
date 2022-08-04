@@ -11,4 +11,5 @@ body {
   src: url('../fonts/getSchwifty.ttf');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
