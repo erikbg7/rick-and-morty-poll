@@ -38,7 +38,7 @@ const Results: any = ({ characters }: any) => {
       <div className="py-10">
         <h1 className="text-5xl">Voting Results</h1>
       </div>
-      <div ref={parentRef} className="w-screen h-[80vh] overflow-auto">
+      <div ref={parentRef} className="w-screen h-[75vh] overflow-auto">
         <div
           className={`relative w-screen`}
           style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
@@ -81,7 +81,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const DAY_IN_SECONDS = 60 * 60 * 24;
   const sortedCharacters = await getSortedCharacters();
 
-  return { props: { characters: sortedCharacters }, revalidate: DAY_IN_SECONDS };
+  return { props: { characters: sortedCharacters.slice(0, 100) }, revalidate: DAY_IN_SECONDS };
 };
 
 export default Results;

@@ -47,27 +47,37 @@ const Home: NextPage = () => {
           </div>
           <div className="flex items-center">
             <span className="text-sm">by Erik Blanca</span>
-            <a className="mx-2" href="https://www.linkedin.com/in/erik-blanca-gomez-32455a162/">
-              <FaLinkedin size={20} />
+            <a
+              className="ml-4"
+              title="Link to LinkedIn profile"
+              href="https://www.linkedin.com/in/erik-blanca-gomez-32455a162/"
+            >
+              <FaLinkedin size={24} />
             </a>
-            <a href="https://www.github.com/erikbg7">
-              <FaGithub size={20} />
+            <a
+              className="ml-4"
+              title="Link to GitHub profile"
+              href="https://www.github.com/erikbg7"
+            >
+              <FaGithub size={24} />
             </a>
           </div>
         </div>
       </nav>
 
       <main>
-        <div className="h-screen w-screen flex flex-col justify-center items-center">
-          <div className="font-rick text-7xl pb-20" style={fontStyle}>
-            Rick <span className="font-rick text-4xl">And</span> Morty
+        <div className="h-screen w-screen flex flex-col justify-end sm:justify-center items-center">
+          <div className="font-rick text-4xl sm:text-7xl" style={fontStyle}>
+            Rick <span className="font-rick text-xl sm:text-4xl">And</span> Morty
           </div>
-          <h1 className="text-5xl text-center mb-5">Which character is your favorite?</h1>
-          <div className="flex justify-center max-w-2xl mt-4 p-6">
+          <h1 className="text-2xl sm:text-5xl text-center p-5">
+            Which character is your favorite?
+          </h1>
+          <div className="flex flex-col sm:flex-row justify-center max-w-2xl p-6">
             <div className="w-60 h-60">
               {firstId && <CharacterCard id={firstId} onClick={handleCharacterVoting} />}
             </div>
-            <div className="mx-4 my-auto">
+            <div className="hidden sm:visible mx-4 my-auto">
               <span className="font-rick text-5xl" style={fontStyle}>
                 VS
               </span>
