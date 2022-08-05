@@ -13,3 +13,11 @@ body {
   font-style: normal;
   font-display: swap;
 }
+
+.font-rick {
+  color: #3ee2e8;
+  text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000, 1px 1px #000, -1px -1px #000,
+    1px -1px #000, -1px 1px #000, 3px 0 4px #66b366, -3px 0 4px #66b366, 0 3px 4px #66b366,
+    0 -3px 4px #66b366, 2px 2px 4px #66b366, -2px -2px 4px #66b366, 2px -2px 4px #66b366,
+    -2px 2px 4px #66b366;
+}

@@ -7,13 +7,6 @@ import { trpc } from '@/utils/trpc';
 import { getCharactersIds } from '@/utils/characters';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
-const fontStyle = {
-  color: '#3ee2e8',
-  textShadow:
-    '1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000,1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000, ' +
-    '3px 0 4px #66b366, -3px 0 4px #66b366, 0 3px 4px #66b366, 0 -3px 4px #66b366, 2px 2px 4px #66b366, -2px -2px 4px #66b366, 2px -2px 4px #66b366, -2px 2px 4px #66b366',
-};
-
 const Home: NextPage = () => {
   const [characterIds, setCharacterIds] = useState<string[]>(getCharactersIds);
   const [firstId, secondId] = characterIds;
@@ -64,7 +57,7 @@ const Home: NextPage = () => {
 
       <main>
         <div className="h-screen w-screen flex flex-col justify-center items-center">
-          <div className="font-rick text-4xl sm:text-7xl" style={fontStyle}>
+          <div className="font-rick text-4xl sm:text-7xl">
             Rick <span className="font-rick text-2xl sm:text-4xl">And</span> Morty
           </div>
           <h1 className="text-2xl sm:text-5xl text-center p-5">
@@ -75,9 +68,7 @@ const Home: NextPage = () => {
               {firstId && <CharacterCard id={firstId} onClick={handleCharacterVoting} />}
             </div>
             <div className="hidden sm:visible mx-4 my-auto">
-              <span className="font-rick text-5xl" style={fontStyle}>
-                VS
-              </span>
+              <span className="font-rick text-5xl">VS</span>
             </div>
             <div className="w-60 h-40 sm:h-60">
               {secondId && <CharacterCard id={secondId} onClick={handleCharacterVoting} />}
