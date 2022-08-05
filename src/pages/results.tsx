@@ -3,6 +3,7 @@ import prisma from '@/server/prisma';
 import Head from 'next/head';
 import Image from 'next/image';
 import { GetStaticProps } from 'next';
+import { AsyncReturnType } from 'type-fest';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 const getSortedCharacters = async () => {
@@ -24,7 +25,9 @@ const getSortedCharacters = async () => {
   });
 };
 
-const Results: any = ({ characters }: any) => {
+type CharacterQueryResult = AsyncReturnType<typeof getSortedCharacters>;
+
+const Results = ({ characters }: { characters: CharacterQueryResult }) => {
   const parentRef = React.useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtualizer({
@@ -64,7 +67,7 @@ const Results: any = ({ characters }: any) => {
                       <span className="absolute top-0 left-0 bg-blue-400 z-10 px-1 rounded-br-md shadow-black shadow-md">
                         {virtualItem.index + 1}
                       </span>
-                      <Image src={item.imageUrl as string} alt={item.name} layout="fill" />
+                      <Image src={item.imageUrl} alt={item.name} layout="fill" />
                     </div>
                     <div className="flex flex-col ml-3 w-[300px]">
                       <h2 className="text-xl">{item.name}</h2>
@@ -87,7 +90,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const DAY_IN_SECONDS = 60 * 60 * 24;
   const sortedCharacters = await getSortedCharacters();
 
-  return { props: { characters: sortedCharacters.slice(0, 100) }, revalidate: DAY_IN_SECONDS };
+  return { props: { characters: sortedCharacters }, revalidate: DAY_IN_SECONDS };
 };
 
 export default Results;
