@@ -1,7 +1,8 @@
 import React from 'react';
 import prisma from '@/server/prisma';
-import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
+import { GetStaticProps } from 'next';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 const getSortedCharacters = async () => {
@@ -34,46 +35,51 @@ const Results: any = ({ characters }: any) => {
   });
 
   return (
-    <div className="flex flex-col items-center p-6">
-      <div className="py-10">
-        <h1 className="text-5xl">Voting Results</h1>
-      </div>
-      <div ref={parentRef} className="w-screen h-[75vh] overflow-auto">
-        <div
-          className={`relative w-screen`}
-          style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
-        >
-          {rowVirtualizer.getVirtualItems().map((virtualItem) => {
-            const item = characters[virtualItem.index];
-            return (
-              <div
-                className="absolute top-0 left-0 w-screen"
-                key={virtualItem.key}
-                style={{
-                  height: `${virtualItem.size}px`,
-                  transform: `translateY(${virtualItem.start}px)`,
-                }}
-              >
-                <div className="flex justify-center p-4 border-b-2 border-b-gray-700">
-                  <div className="relative w-20 h-20 rounded-md overflow-hidden cursor-pointer">
-                    <span className="absolute top-0 left-0 bg-blue-400 z-10 px-1 rounded-br-md shadow-black shadow-md">
-                      {virtualItem.index + 1}
-                    </span>
-                    <Image src={item.imageUrl as string} alt={item.name} layout="fill" />
-                  </div>
-                  <div className="flex flex-col ml-3 w-[300px]">
-                    <h2 className="text-xl">{item.name}</h2>
-                    <h3 className="text-md">
-                      {item._count.VoteFor} votes for - {item._count.VoteAgainst} votes against
-                    </h3>
+    <>
+      <Head>
+        <title>Poll Results</title>
+      </Head>
+      <div className="flex flex-col items-center p-6">
+        <div className="py-10">
+          <h1 className="text-5xl">Voting Results</h1>
+        </div>
+        <div ref={parentRef} className="w-screen h-[75vh] overflow-auto">
+          <div
+            className={`relative w-screen`}
+            style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
+          >
+            {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+              const item = characters[virtualItem.index];
+              return (
+                <div
+                  className="absolute top-0 left-0 w-screen"
+                  key={virtualItem.key}
+                  style={{
+                    height: `${virtualItem.size}px`,
+                    transform: `translateY(${virtualItem.start}px)`,
+                  }}
+                >
+                  <div className="flex justify-center p-4 border-b-2 border-b-gray-700">
+                    <div className="relative w-20 h-20 rounded-md overflow-hidden cursor-pointer">
+                      <span className="absolute top-0 left-0 bg-blue-400 z-10 px-1 rounded-br-md shadow-black shadow-md">
+                        {virtualItem.index + 1}
+                      </span>
+                      <Image src={item.imageUrl as string} alt={item.name} layout="fill" />
+                    </div>
+                    <div className="flex flex-col ml-3 w-[300px]">
+                      <h2 className="text-xl">{item.name}</h2>
+                      <h3 className="text-md">
+                        {item._count.VoteFor} votes for - {item._count.VoteAgainst} votes against
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
