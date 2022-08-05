@@ -11,8 +11,6 @@ export default function Document() {
           content="Which is your favourite Rick and Morty character? Vote and see the results."
         />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@nytimesbits" />
-        <meta name="twitter:creator" content="@nickbilton" />
         <meta property="og:url" content="https://rick-and-morty-poll.vercel.app/" />
         <meta property="og:title" content="Rick and Morty Poll" />
         <meta
