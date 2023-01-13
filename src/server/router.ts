@@ -4,6 +4,11 @@ import prisma from '@/server/prisma';
 
 export const appRouter = trpc
   .router()
+  .query('preconnect', {
+    async resolve() {
+      await prisma.$connect();
+    },
+  })
   .query('get-character-by-id', {
     input: z.object({ id: z.string() }),
     async resolve({ input }) {

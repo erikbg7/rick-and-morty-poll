@@ -3,12 +3,17 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { trpc } from '@/utils/trpc';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { getCharactersIds } from '@/utils/characters';
 import { BASE64_PLACEHOLDER, getImageUrlById } from '@/utils/images';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const onError = () => router.replace('/404');
+  trpc.useQuery(['preconnect'], { onError, retry: 0 });
+
   const [characterIds, setCharacterIds] = useState<string[]>(getCharactersIds);
   const [firstId, secondId] = characterIds;
 
