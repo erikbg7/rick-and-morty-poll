@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { trpc } from '@/utils/trpc';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
-import { BASE64_PLACEHOLDER } from '@/utils/images';
 import { getCharactersIds } from '@/utils/characters';
+import { BASE64_PLACEHOLDER, getImageUrlById } from '@/utils/images';
 
 const Home: NextPage = () => {
   const [characterIds, setCharacterIds] = useState<string[]>(getCharactersIds);
@@ -84,11 +84,6 @@ const Home: NextPage = () => {
 type CharacterCardProps = { id: string; onClick(id: string): void };
 
 const CharacterCard: React.FC<CharacterCardProps> = ({ id, onClick }) => {
-  const { data, isLoading } = trpc.useQuery(['get-character-by-id', { id }]);
-  if (isLoading) {
-    return <div></div>;
-  }
-
   return (
     <div className="flex flex-col items-center">
       <div
@@ -97,16 +92,27 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ id, onClick }) => {
       >
         <Image
           priority
-          alt={data!.character!.name}
-          src={data!.character!.imageUrl}
+          alt={'rick and morty character' + id}
+          src={getImageUrlById(id)}
           layout="fill"
           placeholder="blur"
           blurDataURL={BASE64_PLACEHOLDER}
         />
       </div>
-      <h2 className="text-xl text-center mt-3">{data!.character!.name}</h2>
+      <CharacterName id={id} />
     </div>
   );
+};
+
+type CharacterNameProps = { id: string };
+
+const CharacterName: React.FC<CharacterNameProps> = ({ id }) => {
+  const { data } = trpc.useQuery(['get-character-by-id', { id }]);
+
+  if (data?.character?.name) {
+    return <h2 className="slide-up text-xl text-center mt-3">{data.character.name}</h2>;
+  }
+  return <></>;
 };
 
 export default Home;

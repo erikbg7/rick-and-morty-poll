@@ -21,3 +21,18 @@ body {
     0 -3px 4px #66b366, 2px 2px 4px #66b366, -2px -2px 4px #66b366, 2px -2px 4px #66b366,
     -2px 2px 4px #66b366;
 }
+
+.slide-up {
+  animation: slide-up 0.4s ease-in-out;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
