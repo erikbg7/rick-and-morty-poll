@@ -4,7 +4,7 @@
 
 **Which is your favorite Rick and Morty character? Vote and see the current results.**
 
-![Alt text](./public/lighthouse-screenshot.png "Lighthouse")
+![Alt text](./public/lighthouse-screenshot.png 'Lighthouse')
 
 ## Tech stack
 
@@ -18,6 +18,10 @@
 
 Populate a PostgreSQL database with the correct data, you already have a script to do so in the **/scripts** folder.
 
+```bash
+npx tsx scripts/populate-db-from-external-api.ts
+```
+
 Add the correct DATABASE_URL in the .env file.
 
 Run the development server:
@@ -29,5 +33,3 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-
